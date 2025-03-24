@@ -1,0 +1,76 @@
+blueprint:
+  homeassistant:
+    min_version: 2025.3.4
+  name: ZT-LP-ZEU3S-WH-MS (MQTT trigger)
+  description: "Controller automation for executing **press** actions
+    triggered by Moes 2 Gang ZT-LP-ZEU3S-WH-MS switch.\n\n**SETTINGS**\nIn
+    this tab, there is the possibility to change different parameters.\n  - **Controller Name**\n\n  - **Base
+    topic**\n\nℹ️ Version 0.1\n"
+  domain: automation
+  input:
+    settings_section:
+      name: Settings
+      icon: mdi:cog-outline
+      collapsed: false
+      input:
+        controller:
+          name: Controller Name
+          description: The name of the controller as defined in Z2M (e.g. Livingroom_Switch)
+          default: []
+          selector:
+            text:
+              type: text
+              multiple: true
+              multiline: false
+        base_topic:
+          name: Base topic (MQTT)
+          description: The base topic as configured in z2m
+          default: zigbee2mqtt
+    ZT-LP-ZEU3S-WH-MS_actions:
+      name: ZT-LP-ZEU3S-WH-MS - Actions
+      icon: mdi:gesture-tap
+      collapsed: false
+      input:
+        button_left_pressed:
+          name: Left Button Pressed
+          description: Action to run, when the left button is pressed.
+          default: []
+          selector:
+            action: {}
+        button_middle_pressed:
+          name: Middle Button Pressed
+          description: Action to run, when the middle button is pressed.
+          default: []
+          selector:
+            action: {}
+        button_right_pressed:
+          name: Right Button Pressed
+          description: Action to run, when the right button is pressed.
+          default: []
+          selector:
+            action: {}
+  source_url: https://raw.githubusercontent.com/maxwelljk/ha_blueprints/refs/heads/main/ZT-LP-ZEU3S-WH-MS.yaml
+mode: single
+max_exceeded: silent
+trigger_variables:
+  base_topic: !input base_topic
+triggers:
+- trigger: mqtt
+  topic: '{{ base_topic ~ "/+" ~ "/action" }}'
+variables:
+  command: '{{ trigger.payload }}'
+  controller: !input controller
+  mqtt_topic: '{{ trigger.topic }}'
+conditions:
+  and:
+  - '{{ mqtt_topic.split("/")[1] in controller }}'
+  - '{{ command in ("on","off","recall_scene1") }}'
+actions:
+- if: '{{ command == "off" }}'
+  then:
+    sequence: !input button_left_pressed
+  else if: '{{ command == "on" }}'
+  then:
+    sequence: !input button_middle_pressed
+  else:
+    sequence: !input button_right_pressed
