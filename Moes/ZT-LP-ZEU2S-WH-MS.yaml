@@ -3,11 +3,9 @@ blueprint:
     min_version: 2025.3.4
   name: ZT-LP-ZEU2S-WH-MS (MQTT trigger)
   description: "Controller automation for executing **press** actions
-    triggered by Moes 2 Gang ZT-LP-ZEU2S-WH-MS switch.\n\nMake sure to manually create a separate
-    **Text Helper**  and define its entity in the automation. It's used to store the
-    last controller event to filter and handle 'button hold' actions.\n\n**SETTINGS**\nIn
-    this tab, there is the possibility to change different parameters.\n  - **Base
-    topic**\n  - **Hold delay**\n  - **Text Helper**\n\nℹ️ Version 2025.3.4\n"
+    triggered by Moes 2 Gang ZT-LP-ZEU2S-WH-MS switch.\n\n**SETTINGS**\nIn
+    this tab, there is the possibility to change different parameters.\n  - **Controller Name**\n
+    - **Base topic**\n\nℹ️ Version 0.1\n"
   domain: automation
   input:
     controller:
