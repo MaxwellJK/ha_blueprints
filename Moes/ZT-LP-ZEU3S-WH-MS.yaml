@@ -66,11 +66,14 @@ conditions:
   - '{{ mqtt_topic.split("/")[1] in controller }}'
   - '{{ command in ("on","off","recall_scene1") }}'
 actions:
-- if: '{{ command == "off" }}'
+- if:
+    - '{{ command == "off" }}'
   then:
-    sequence: !input button_left_pressed
-  else if: '{{ command == "on" }}'
-  then:
-    sequence: !input button_middle_pressed
+    - sequence: !input button_left_pressed
   else:
-    sequence: !input button_right_pressed
+    - if:
+        - '{{ command == "on" }}'
+      then:
+        - sequence: !input button_middle_pressed
+      else:
+        - sequence: !input button_right_pressed
