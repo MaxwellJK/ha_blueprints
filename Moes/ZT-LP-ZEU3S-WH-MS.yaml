@@ -1,11 +1,11 @@
 blueprint:
   homeassistant:
     min_version: 2025.3.4
-  name: ZT-LP-ZEU3S-WH-MS (MQTT trigger)
+  name: Moes Self-Powered Zigbee Switch 3 Gang (ZT-LP-ZEU3S-WH-MS)
   description: "Controller automation for executing **press** actions
     triggered by Moes 3 Gang ZT-LP-ZEU3S-WH-MS switch.\n\n**SETTINGS**\nIn
     this tab, there is the possibility to change different parameters.\n  - **Controller Name**\n\n  - **Base
-    topic**\n\nℹ️ Version 0.1\n"
+    topic**\n\nℹ️ Version 0.2\n"
   domain: automation
   input:
     settings_section:
